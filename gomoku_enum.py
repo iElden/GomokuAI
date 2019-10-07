@@ -4,3 +4,8 @@ class Player(IntEnum):
     NONE = 0
     ALLY = 1
     ENEMY = 2
+
+class Order(IntEnum):
+    NONE = 0
+    PLAY = 1
+    EXIT = 2
