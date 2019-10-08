@@ -21,6 +21,7 @@ class Protocol:
             "END": lambda: self.cmd_end(),
             "ABOUT": lambda: self.cmd_about(),
             "RECTSTART": lambda x, y: self.cmd_rectstart(int(x), int(y)),
+            "RESTART": lambda: self.cmd_restart(),
             "TAKEBACK": lambda x, y: self.cmd_traceback(int(x), int(y)),
             "PLAY": lambda x, y: self.cmd_play(int(x), int(y)),
         }

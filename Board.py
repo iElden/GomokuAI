@@ -21,7 +21,7 @@ class Board:
         if size:
             self.size = size
         self.has_been_edited = True
-        self.raw = [[0] * size for _ in range(size)]
+        self.raw = [[0] * self.size for _ in range(self.size)]
 
     def get(self, x, y):
         """
