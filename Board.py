@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from gomoku_enum import Player
 
 PLAYER_REPR = [" ", "X", "O"]
@@ -17,11 +17,21 @@ class Board:
         self.has_been_edited = False
         return self.__str__()
 
+    def enumerate(self):
+        """
+        Returns:
+            Tuple[int, int, Player]: a tuple with x, y, and a player for each case in the board
+        """
+        for j, ls in enumerate(self.raw):
+            for i, v in enumerate(ls):
+                yield (i, j, v)
+        return
+
     def reset(self, size=None):
         if size:
             self.size = size
         self.has_been_edited = True
-        self.raw = [[0] * self.size for _ in range(self.size)]
+        self.raw = [[Player.NONE] * self.size for _ in range(self.size)]
 
     def get(self, x, y):
         """
