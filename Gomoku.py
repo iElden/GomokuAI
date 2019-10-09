@@ -6,7 +6,7 @@ from Brain import Brain
 from ProtocolManager import Protocol
 from gomoku_enum import Order, Player
 
-logging.basicConfig(level="INFO")
+logging.basicConfig(level="WARNING")
 logger = logging.getLogger("Main")
 
 class GomokuAI:
