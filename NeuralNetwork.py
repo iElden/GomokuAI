@@ -17,9 +17,11 @@ class NeuralLayer:
 
 class NeuralNetwork:
     def __init__(self, nb_inputs, nb_hidden_layers, nb_outputs, layer_size):
-        self.layers = ([NeuralLayer(layer_size, nb_inputs)] +
-                       [NeuralLayer(layer_size, layer_size) for _ in range(0, nb_hidden_layers)] +
-                       [NeuralLayer(nb_outputs, layer_size)])
+        self.layers = [
+            NeuralLayer(layer_size, nb_inputs),
+            *(NeuralLayer(layer_size, layer_size) for _ in range(0, nb_hidden_layers)),
+            NeuralLayer(nb_outputs, layer_size)
+        ]
 
     def get_layer_output(self, inputs, index):
         if index == len(self.layers) - 1:
