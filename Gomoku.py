@@ -14,7 +14,7 @@ class GomokuAI:
     def __init__(self, size, print_board=False):
         self.board = Board(size)  # type: Board
         self.protocol = Protocol(self.board)  # type: Protocol
-        self.brain = Brain(self.board)  # type: Brain
+        self.brain = Brain(self.board, "data/brain.dat")  # type: Brain
         self.print_board = print_board  # type: bool
 
     def run(self):

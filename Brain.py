@@ -26,8 +26,7 @@ class Brain:
         """
         output = list(self.network.get_output([player.value for _, _, player in self.board.enumerate()]))
         logger.debug(f"Ai result is {output}")
-        #return tuple(int(val * 19) for val in output)
-        return self.put_rock_randomly()
+        return tuple(int(val * 19) for val in output)
 
     def put_rock_randomly(self):
         coords = [(i, j) for i, j, v in self.board.enumerate() if not v]
