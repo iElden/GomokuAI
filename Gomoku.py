@@ -1,4 +1,4 @@
-from sys import stderr, exit
+from sys import exit
 import logging
 
 from Board import Board
@@ -8,6 +8,7 @@ from gomoku_enum import Order, Player
 
 logging.basicConfig(level="WARNING")
 logger = logging.getLogger("Main")
+
 
 class GomokuAI:
     def __init__(self, size, print_board=False):

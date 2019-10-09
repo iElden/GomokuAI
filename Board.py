@@ -3,6 +3,7 @@ from gomoku_enum import Player
 
 PLAYER_REPR = [" ", "X", "O"]
 
+
 class Board:
     def __init__(self, size):
         self.size = None  #type: int
