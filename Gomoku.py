@@ -34,5 +34,5 @@ class GomokuAI:
                 logger.info(f"Board state:\n{self.board.dump()}")
 
 
-ai = GomokuAI(19, print_board=True)
+ai = GomokuAI(20, print_board=True)
 ai.run()

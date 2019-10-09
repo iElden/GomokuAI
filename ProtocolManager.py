@@ -54,8 +54,6 @@ class Protocol:
         return Order.NONE
 
     def cmd_start(self, size):
-        if size != 19:
-            raise InvalidInput("The output Given")
         self.board.reset(size)
         self.send("OK")
         return Order.NONE
