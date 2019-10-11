@@ -28,6 +28,7 @@ class Protocol:
         self.board = board  #type: Board
 
     def send(self, *data, sep=','):
+        logger.debug(f"SENDING *{data}")
         print(*data, sep=sep)
 
     def send_error(self, exception):

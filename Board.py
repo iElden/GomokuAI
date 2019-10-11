@@ -42,7 +42,9 @@ class Board:
         Returns:
             Player: Returns an int according to the stone placed on the square (0: None, 1: Ally, 2: Enemy)
         """
-        return self.raw[y][x]
+        if x >= self.size or y >= self.size:
+            raise ValueError("Value given is >= of the map size")
+        return self.raw[y - 1][x - 1]
 
     def put(self, x, y, player):
         """
@@ -54,7 +56,25 @@ class Board:
             None: None
         """
         self.has_been_edited = True
-        self.raw[y][x] = player
+        self.raw[y - 1][x - 1] = player
+
+    def get_winner(self):
+        """
+        Returns:
+            Player: Player who won
+        """
+        rotated = [*zip(*self.raw)]
+        for player in (Player.ALLY, Player.ENEMY):
+            for y in range(self.size - 4):
+                for x in range(self.size - 4):
+                    if sum(i for i in self.raw[x][y:y+5] if i == player) == 5:
+                        return player
+                    if sum(i for i in rotated[x][y:y+5] if i == player) == 5:
+                        return player
+                    if sum(i for i in [self.raw[x+j][y+j] for j in range(5)] if i == player) == 5:
+                        return player
+
+        return Player.NONE
 
 
 class EmplacementAlreadyUser(Exception):

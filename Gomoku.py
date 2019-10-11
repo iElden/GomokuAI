@@ -24,7 +24,6 @@ class GomokuAI:
             if order == Order.NONE:
                 continue
             elif order == Order.EXIT:
-                print("EXIT !")
                 exit(0)
             elif order == Order.PLAY:
                 coords = self.brain.play()
@@ -34,6 +33,6 @@ class GomokuAI:
             if self.print_board and self.board.has_been_edited:
                 logger.info(f"Board state:\n{self.board.dump()}")
 
-
-ai = GomokuAI(20, print_board=True)
-ai.run()
+if __name__ == "__main__":
+    ai = GomokuAI(20, print_board=True)
+    ai.run()
