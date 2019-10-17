@@ -25,7 +25,7 @@ class Board:
         """
         for j, ls in enumerate(self.raw):
             for i, v in enumerate(ls):
-                yield (i, j, v)
+                yield (i + 1, j + 1, v)
         return
 
     def reset(self, size=None):
@@ -42,7 +42,7 @@ class Board:
         Returns:
             Player: Returns an int according to the stone placed on the square (0: None, 1: Ally, 2: Enemy)
         """
-        if x >= self.size or y >= self.size:
+        if x > self.size or y > self.size or x <= 0 or y <= 0:
             raise ValueError("Value given is >= of the map size")
         return self.raw[y - 1][x - 1]
 
