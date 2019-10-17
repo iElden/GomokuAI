@@ -25,7 +25,7 @@ class Board:
         """
         for j, ls in enumerate(self.raw):
             for i, v in enumerate(ls):
-                yield (i + 1, j + 1, v)
+                yield (i, j, v)
         return
 
     def reset(self, size=None):
@@ -42,9 +42,9 @@ class Board:
         Returns:
             Player: Returns an int according to the stone placed on the square (0: None, 1: Ally, 2: Enemy)
         """
-        if x > self.size or y > self.size or x <= 0 or y <= 0:
-            raise ValueError("Value given is >= of the map size")
-        return self.raw[y - 1][x - 1]
+        if x > self.size or y > self.size or x < 0 or y < 0:
+            raise ValueError("Value given is out of map")
+        return self.raw[y][x]
 
     def put(self, x, y, player):
         """
@@ -56,7 +56,7 @@ class Board:
             None: None
         """
         self.has_been_edited = True
-        self.raw[y - 1][x - 1] = player
+        self.raw[y][x] = player
 
     def get_winner(self):
         """
@@ -73,7 +73,10 @@ class Board:
                         return player
                     if sum(i for i in [self.raw[x+j][y+j] for j in range(5)] if i == player) == 5:
                         return player
-
+            for y in range(4, self.size):
+                for x in range(4, self.size):
+                    if sum(i for i in [self.raw[x-j][y-j] for j in range(5)] if i == player) == 5:
+                        return player
         return Player.NONE
 
 

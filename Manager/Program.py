@@ -9,7 +9,7 @@ EXCEPTED_OUTPUT = r"^(\d+),(\d+)$"
 
 class Program:
     def __init__(self):
-        """ASYNCIO CLASS : DON'T CALL THIS"""
+        """ASYNCIO CLASS : DON'T CALL THIS, call .create() instead"""
         self.nb = None  # type: int
         self.proc = None # type: subprocess.Process
         self.logger = None # type: logging.Logger
@@ -29,7 +29,7 @@ class Program:
     async def send(self, txt : str) -> None:
         self.log(f"Send to program: {txt}")
         self.proc.stdin.write(f"{txt}\n".encode('ASCII'))
-        self.log(f"Sended", level=10)
+        self.log(f"Sent", level=10)
 
     async def recv(self, timeout=5) -> str:
         r = self.proc.returncode

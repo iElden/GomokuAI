@@ -45,7 +45,7 @@ class Manager:
                 raise ProgramKO(program.nb, f"The program must be return 'OK' after a START but it was {opt}")
 
     async def run_game(self):
-        current_turn = 1
+        current_turn = 2
 
         await self.send_starts_to_programs()
         x, y = await self.program1.communicate_coords("BEGIN")
