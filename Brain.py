@@ -26,6 +26,9 @@ class Brain:
         """
         return self.put_rock_randomly()
 
+    def get_euristic_tab(self):
+        pass
+
     def play_machine_learning(self):
         output = list(self.network.get_output([player.value for _, _, player in self.board.enumerate()]))
         logger.debug(f"Ai result is {output}")

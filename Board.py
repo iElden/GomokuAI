@@ -28,6 +28,22 @@ class Board:
                 yield (i, j, v)
         return
 
+    def enumerate_comp(self):
+        """
+        Returns:
+            List[Tuple[int, int, Player]]: Generator that return a list of all 5 combinaison in boards
+        """
+        rotated = [*zip(*self.raw)]
+        for y in range(self.size - 4):
+            for x in range(self.size - 4):
+                yield zip(range(x, x+5), range(y, y+5), self.raw[x][y:y+5])
+                yield zip(range(x, x+5), range(y, y+5), rotated[x][y:y+5])
+                yield zip(range(x, x+5), range(y, y+5), [self.raw[x+i][y+i] for i in range(5)])
+        for y in range(4, self.size):
+            for x in range(4, self.size):
+                yield zip(range(x, x+5), range(y, y+5), [self.raw[x-i][y-i] for i in range(5)])
+        return
+
     def reset(self, size=None):
         if size:
             self.size = size
@@ -63,20 +79,10 @@ class Board:
         Returns:
             Player: Player who won
         """
-        rotated = [*zip(*self.raw)]
         for player in (Player.ALLY, Player.ENEMY):
-            for y in range(self.size - 4):
-                for x in range(self.size - 4):
-                    if sum(i for i in self.raw[x][y:y+5] if i == player) == 5:
-                        return player
-                    if sum(i for i in rotated[x][y:y+5] if i == player) == 5:
-                        return player
-                    if sum(i for i in [self.raw[x+j][y+j] for j in range(5)] if i == player) == 5:
-                        return player
-            for y in range(4, self.size):
-                for x in range(4, self.size):
-                    if sum(i for i in [self.raw[x-j][y-j] for j in range(5)] if i == player) == 5:
-                        return player
+            for ls in self.enumerate_comp():
+                if len([p for x, y, p in ls if p == player]) == 5:
+                    return player
         return Player.NONE
 
 
