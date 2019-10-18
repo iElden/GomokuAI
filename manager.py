@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sys import exit
+from sys import exit, argv
 from Manager.exc import ProgramKO, ProgramCrashed
 from Manager.Manager import Manager
 import logging
@@ -9,7 +9,6 @@ import asyncio
 logging.basicConfig(level="INFO")
 
 if __name__ == "__main__":
-    from sys import argv
     loop = asyncio.get_event_loop()
     try:
         manager = Manager(argv[1], argv[2])
