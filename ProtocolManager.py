@@ -55,6 +55,8 @@ class Protocol:
         return Order.NONE
 
     def cmd_start(self, size):
+        if size < 5:
+            raise InvalidInput("Size can't be < at 5")
         self.board.reset(size)
         self.send("OK")
         return Order.NONE
