@@ -45,7 +45,12 @@ class Protocol:
         logger.debug("Waiting for Manager input")
         text = self._recv()
         logger.info(f"Recieve: {text}")
-        cmd, *args = text.split(' ')
+        if ' ' in text:
+            cmd, args = text.split(' ', 1)
+            args = args.split(',')
+        else:
+            cmd = text
+            args = []
         try:
             return self.FUNC[cmd](*args)
         except KeyError:
@@ -74,7 +79,7 @@ class Protocol:
             text = self._recv()
             if text == "DONE":
                 break
-            x, y, player_id = [int(i) for i in text.split()]
+            x, y, player_id = [int(i) for i in text.split(',')]
             self.board.put(x, y, Player(player_id))
         return Order.PLAY
 
