@@ -18,7 +18,7 @@ class Program:
     async def create(cls, path, *, nb):
         self = cls()
         self.nb = nb
-        self.proc = await subprocess.create_subprocess_exec(path, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        self.proc = await subprocess.create_subprocess_exec(path, stdin=subprocess.PIPE, stdout=subprocess.PIPE, )#stderr=subprocess.DEVNULL)
         self.logger = logging.getLogger("Program")
         self.log("READY")
         return self
@@ -43,7 +43,7 @@ class Program:
             raise ProgramCrashed(self.nb, f"The Program didn't answer within {timeout} seconds")
 
         if not line:
-            raise ProgramKO(self.nb, "The manager excepted a output but the program reach EOF")
+            raise ProgramCrashed(self.nb, "The manager excepted a output but the program reach EOF")
         return line.decode('ASCII').rstrip('\n')
 
     async def recv_coord(self) -> Tuple[int, int]:

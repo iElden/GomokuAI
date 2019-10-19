@@ -27,8 +27,10 @@ class GomokuAI:
                 exit(0)
             elif order == Order.PLAY:
                 coords = self.brain.play()
-                self.board.put(*coords, Player.ALLY)
-                self.protocol.send(*coords)
+            elif order == Order.BEGIN:
+                coords = self.brain.begin()
+            self.board.put(*coords, Player.ALLY)
+            self.protocol.send(*coords)
 
             if self.print_board and self.board.has_been_edited:
                 logger.info(f"Board state:\n{self.board.dump()}")

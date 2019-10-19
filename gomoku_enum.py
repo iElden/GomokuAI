@@ -8,4 +8,5 @@ class Player(IntEnum):
 class Order(IntEnum):
     NONE = 0
     PLAY = 1
-    EXIT = 2
+    BEGIN = 2
+    EXIT = 3

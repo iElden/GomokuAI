@@ -66,7 +66,7 @@ class Protocol:
         return Order.PLAY
 
     def cmd_begin(self):
-        return Order.PLAY
+        return Order.BEGIN
 
     def cmd_board(self):
         self.board.reset(self.board.size)

@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Iterator
 from gomoku_enum import Player
 
 PLAYER_REPR = [" ", "X", "O"]
@@ -21,7 +21,7 @@ class Board:
     def enumerate(self):
         """
         Returns:
-            Tuple[int, int, Player]: a tuple with x, y, and a player for each case in the board
+            Iterator[Tuple[int, int, Player]]: a tuple with x, y, and a player for each case in the board
         """
         for j, ls in enumerate(self.raw):
             for i, v in enumerate(ls):
@@ -31,17 +31,19 @@ class Board:
     def enumerate_comp(self):
         """
         Returns:
-            List[Tuple[int, int, Player]]: Generator that return a list of all 5 combinaison in boards
+            Iterator[List[Tuple[int, int, Player]]]: Generator that return a list of all 5 combinaison in boards
         """
         rotated = [*zip(*self.raw)]
         for y in range(self.size - 4):
             for x in range(self.size - 4):
-                yield zip(range(x, x+5), range(y, y+5), self.raw[x][y:y+5])
-                yield zip(range(x, x+5), range(y, y+5), rotated[x][y:y+5])
-                yield zip(range(x, x+5), range(y, y+5), [self.raw[x+i][y+i] for i in range(5)])
+                rx = range(x, x+5)
+                ry = range(y, y+5)
+                yield [*zip(rx, [y]*5, self.raw[y][x:x+5])]
+                yield [*zip([y]*5, rx, rotated[y][x:x+5])]
+                yield [*zip(rx, ry, [self.raw[y+i][x+i] for i in range(5)])]
         for y in range(4, self.size):
-            for x in range(4, self.size):
-                yield zip(range(x, x+5), range(y, y+5), [self.raw[x-i][y-i] for i in range(5)])
+            for x in range(self.size - 4):
+                yield [*zip(range(x, x+5), range(y, y-5, -1), [self.raw[y-i][x+i] for i in range(5)])]
         return
 
     def reset(self, size=None):
@@ -49,6 +51,7 @@ class Board:
             self.size = size
         self.has_been_edited = True
         self.raw = [[Player.NONE] * self.size for _ in range(self.size)]
+        #self.raw = [[(i, j) for i in range(self.size)] for j in range(self.size)]
 
     def get(self, x, y):
         """
