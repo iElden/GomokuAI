@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python3 Gomoku.py
+python3 src/Gomoku.py
