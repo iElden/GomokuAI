@@ -1,5 +1,4 @@
-from typing import Tuple
-from NeuralNetwork import NeuralNetwork
+from typing import Tuple, List
 from gomoku_enum import Player
 import itertools
 import random
@@ -14,9 +13,9 @@ DEFAULT_NB_LAYER = 1
 class Brain:
     def __init__(self, board, path=None, machine_learning_mode=False):
         self.board = board  # type: Board
-        if machine_learning_mode:
-            self.network = (NeuralNetwork.unserialize(path) if path is not None
-                            else NeuralNetwork(self.board.size * self.board.size, DEFAULT_NB_LAYER, 2, (self.board.size + 1) ** 2))
+        # if machine_learning_mode:
+        #     self.network = (NeuralNetwork.unserialize(path) if path is not None
+        #                     else NeuralNetwork(self.board.size * self.board.size, DEFAULT_NB_LAYER, 2, (self.board.size + 1) ** 2))
 
     def begin(self):
         """
@@ -49,7 +48,12 @@ class Brain:
                     continue
                 l = [v for _, _, v in ls]
                 nb_none, nb_ally, nb_enemy = (sum(v == p for x, y, v in ls) for p in (Player.NONE, Player.ALLY, Player.ENEMY))
-                if max(nb_ally, nb_enemy) == 4 and nb_none == 1: # A player is REALLY close to win
+                if nb_ally and nb_enemy:  # This chunck can't won
+                    continue
+                if nb_ally == 4:
+                    d[(x, y)] = 10000000
+                    continue
+                if nb_enemy == 4:
                     d[(x, y)] = 1000000
                     continue
                 d[(x, y)] += self.no_border_pattern_bonus(l)
