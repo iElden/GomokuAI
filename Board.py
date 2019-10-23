@@ -34,16 +34,18 @@ class Board:
             Iterator[List[Tuple[int, int, Player]]]: Generator that return a list of all 5 combinaison in boards
         """
         rotated = [*zip(*self.raw)]
-        for y in range(self.size - 4):
-            for x in range(self.size - 4):
+        for y in range(self.size):
+            ry = range(y, y + 5)
+            for x in range(self.size):
                 rx = range(x, x+5)
-                ry = range(y, y+5)
-                yield [*zip(rx, [y]*5, self.raw[y][x:x+5])]
-                yield [*zip([y]*5, rx, rotated[y][x:x+5])]
-                yield [*zip(rx, ry, [self.raw[y+i][x+i] for i in range(5)])]
-        for y in range(4, self.size):
-            for x in range(self.size - 4):
-                yield [*zip(range(x, x+5), range(y, y-5, -1), [self.raw[y-i][x+i] for i in range(5)])]
+                if x in range(self.size - 4):
+                    yield [*zip(rx, [y]*5, self.raw[y][x:x+5])]
+                if x in range(self.size - 4):
+                    yield [*zip([y]*5, rx, rotated[y][x:x+5])]
+                if x in range(self.size - 4) and y in range(self.size - 4):
+                    yield [*zip(rx, ry, [self.raw[y+i][x+i] for i in range(5)])]
+                if y in range(4, self.size) and x in range(self.size - 4):
+                    yield [*zip(range(x, x+5), range(y, y-5, -1), [self.raw[y-i][x+i] for i in range(5)])]
         return
 
     def reset(self, size=None):

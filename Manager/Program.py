@@ -18,7 +18,7 @@ class Program:
     async def create(cls, path, *, nb):
         self = cls()
         self.nb = nb
-        self.proc = await subprocess.create_subprocess_exec(path, stdin=subprocess.PIPE, stdout=subprocess.PIPE, )#stderr=subprocess.DEVNULL)
+        self.proc = await subprocess.create_subprocess_exec(path, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         self.logger = logging.getLogger("Program")
         self.log("READY")
         return self
