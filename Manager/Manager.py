@@ -52,7 +52,7 @@ class Manager:
         self.board.put(x, y, Player(1))
         while True:
             program = self.programs[current_turn - 1]
-            x, y = await program.communicate_coords(f"TURN {x} {y}")
+            x, y = await program.communicate_coords(f"TURN {x},{y}")
             try:
                 if self.board.get(x, y):
                     raise ProgramKO(program.nb, "The program put a rock in not empty slot")
