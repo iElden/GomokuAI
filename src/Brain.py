@@ -57,7 +57,7 @@ class Brain:
                     d[(x, y)] = 1000000
                     continue
                 d[(x, y)] += self.no_border_pattern_bonus(l)
-                d[(x, y)] += ((max(nb_ally, nb_enemy) ** 3) * nb_none) * (1.1 if nb_ally else 1)
+                d[(x, y)] += (max(nb_ally, nb_enemy) ** 3) * nb_none
         return d
 
     def no_border_pattern_bonus(self, ls):
@@ -67,10 +67,9 @@ class Brain:
         Returns:
             int
         """
-        if ls == [0, 1, 1, 1, 0]:
-            return 110
-        if ls == [0, 2, 2, 2, 0]:
-            return 100
+        for pl in (1, 2):
+            if ls == [0, pl, pl, pl, 0]:
+                return 100
         return 0
 
 
