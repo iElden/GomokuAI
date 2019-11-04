@@ -63,7 +63,7 @@ class Program:
         try:
             await wait_for(self.proc.wait(), 1)
         except TimeoutError:
-            await self.proc.kill()
+            self.proc.kill()
             raise ProgramCrashed(self.nb, "The program didn't stop in 1 second after a END has been sent")
 
     async def kill(self):

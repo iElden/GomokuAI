@@ -22,7 +22,7 @@ class UnitTest:
         if self.stdout is not None and output != self.stdout:
             raise TestFailed(f"The output of program differ from excepted output.\nExcept: \"{self.stdout}\"\nGot: \"{output}\"")
         if self.return_code is not None and self.program.proc.returncode != self.return_code:
-            raise TestFailed(f"Invalid exit code. Excepted {self.program.proc.returncode} but got {self.return_code}")
+            raise TestFailed(f"Invalid exit code. Excepted {self.return_code} but got {self.program.proc.returncode}")
         return 'OK'
 
     async def run(self, program_path):
